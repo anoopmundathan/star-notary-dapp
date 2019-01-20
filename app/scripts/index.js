@@ -27,8 +27,6 @@ const createStar = async () => {
 
 // Add a function lookUp to Lookup a star by ID using tokenIdToStarInfo()
 
-//
-
 const App = {
   start: function () {
     const self = this
@@ -63,6 +61,16 @@ const App = {
     createStar();
   },
 
+  lookupStar: async function () {
+    App.setStatus("Searching star...");
+    const { lookUptokenIdToStarInfo } = this.starContract.methods;
+    const id = document.getElementById("tokenId").value;
+    const starInfo = await lookUptokenIdToStarInfo(id).call({ from: this.account });
+    if (!!starInfo) {
+      App.setStatus("The star name is: " + starInfo);
+    } else {
+      App.setStatus("The star with that ID does not exist");
+    }
 }
 
 window.App = App
